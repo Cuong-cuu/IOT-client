@@ -1,26 +1,10 @@
-.logo {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    color: #2E86C1;
-}
-
-.icon {
-    color: #15aabf;
-    font-size: 100px;
-}
-
 .header {
     width: 80%;
     margin: 20px auto 10px auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
-
+  
 .header h2 {
     color: #2E86C1;
 }
@@ -50,7 +34,7 @@
 }
 
 .full {
-    background-color: #03a0fa;
+    background-color: #2E86C1;
 }
 
 .empty {
@@ -58,19 +42,11 @@
 }
 
 @media screen and (max-width: 415px){  
-    .logo {
-        margin-top: 30px;
-        font-size: 20px;
-    }
-
-    .icon {
-        color: #15aabf;
-        font-size: 50px;
-    }
-
     .header{
         width: 90%;
         margin: 20px auto 5px auto;
+        display: flex;
+        flex-direction: column;
         align-items: flex-start;
         padding: 10px 0px;
     }
@@ -80,7 +56,6 @@
         font-size: 30px;
         margin-bottom: 10px;
     }
-    
     .container {
         width: 90%;
         margin: 5px auto 20px auto; 

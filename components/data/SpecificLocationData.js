@@ -3,7 +3,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/SpecificLocation.module.css';
 import { useRouter } from 'next/router';
 
-const ParkingAreasData = ({areas}) => {
+const ParkingAreasData = ({locationData}) => {
     const router = useRouter();
 
     const moveToArea = (id) => {
@@ -12,11 +12,11 @@ const ParkingAreasData = ({areas}) => {
 
     return ( 
         <div className={styles.sub_container}>
-            {areas.map(area => (
-                <div key={area.name} className={styles.area}>
-                    <h3>{area.name}</h3>
-                    <p>empty: {area.empty}</p>
-                    <button onClick={() => moveToArea(area.id)}>Details<FontAwesomeIcon className={styles.sub_icon} icon={faChevronRight} /></button>
+            {locationData.listArea.map(area => (
+                <div key={area._id} className={styles.area}>
+                    <h3>{area.areaName}</h3>
+                    <p>Empty: {area.totalEmpty}</p>
+                    <button onClick={() => moveToArea(area._id)}>Details<FontAwesomeIcon className={styles.sub_icon} icon={faChevronRight} /></button>
                 </div>
             ))}
         </div>
