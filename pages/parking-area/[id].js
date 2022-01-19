@@ -5,10 +5,25 @@ import { faParking } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ParkingArea = ({areaData}) => {
+const ParkingArea = ({areaData, areaId}) => {
     let emptySlots = [];
     let emptyNumber = 0;
-    areaData.data.forEach((data) => {
+
+    const [dynamicAreaData, setDynamicAreaData] = useState(areaData);
+
+    useEffect(() => {
+        setTimeout(async () => {
+            let getAreaData = await axios.get('http://localhost:3000/api/areas/' + areaId);
+
+            let areaDataTest = {};
+            if (getAreaData.data.status == "success") {
+                areaDataTest = getAreaData.data.data.doc;
+            }
+            setDynamicAreaData(areaDataTest);
+        }, 15000)
+    }, [dynamicAreaData])
+
+    dynamicAreaData.data.forEach((data) => {
         if (data.state == 0) {
             emptySlots.push(data.positionNumber);
             emptyNumber++;
@@ -19,11 +34,11 @@ const ParkingArea = ({areaData}) => {
         <div className="body_wrapper">
             <p className="logo"><FontAwesomeIcon className="icon" icon={faParking} />QUICK PARKING</p>
             <div className={styles.header}>
-                <h2>{areaData.name}</h2>
+                <h2>{dynamicAreaData.name}</h2>
                 <p>Empty: {emptyNumber}</p>
             </div>
             <div className={styles.container}>
-                <SpecificAreaData areaData={areaData.data} />
+                <SpecificAreaData areaData={dynamicAreaData.data} />
             </div>
             <p>Empty slot(s): {emptySlots.toString()}</p>
         </div>
@@ -41,7 +56,8 @@ export async function getServerSideProps(ctx) {
     
     return {
         props: {
-            areaData: areaData
+            areaData: areaData,
+            areaId: areaId
         }
     }
 }

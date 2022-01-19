@@ -5,17 +5,30 @@ import React, { useState, useEffect } from 'react';
 import styles from '../../styles/SpecificLocation.module.css';
 import axios from "axios";
 
-const SpecificParkingLocation = ({locationData}) => {
+const SpecificParkingLocation = ({locationData, locationId}) => {
+    const [dynamicLocationData, setDynamicLocationData] = useState(locationData);
+    
+    useEffect(() => {
+        setTimeout(async () => {
+            let getLocationData = await axios.get('http://localhost:3000/api/places/' + locationId);
+
+            let locationDataTest = {};
+            if (getLocationData.data.status == 'success') {
+                locationDataTest = getLocationData.data.data;
+            }
+            setDynamicLocationData(locationDataTest);
+        }, 15000)
+    }, [dynamicLocationData]);
 
     return ( 
         <div className="body_wrapper">
             <p className="logo"><FontAwesomeIcon className="icon" icon={faParking} />QUICK PARKING</p>
             <div className={styles.header}>
                 <h2>Parking Location:</h2>
-                <p>{locationData.placeName}</p>
+                <p>{dynamicLocationData.placeName}</p>
             </div>
             <div className={styles.container}>
-                <SpecificLocationData locationData={locationData}/>
+                <SpecificLocationData locationData={dynamicLocationData}/>
             </div>
         </div>
     );
@@ -32,7 +45,8 @@ export async function getServerSideProps(ctx) {
     
     return {
         props: {
-            locationData: locationData
+            locationData: locationData,
+            locationId: locationId
         }
     }
 }
