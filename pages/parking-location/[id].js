@@ -7,8 +7,10 @@ import axios from "axios";
 
 const SpecificParkingLocation = ({locationData, locationId}) => {
     const [dynamicLocationData, setDynamicLocationData] = useState(locationData);
+    const [didMount, setDidMount] = useState(false);
     
     useEffect(() => {
+        setDidMount(true);
         setTimeout(async () => {
             let getLocationData = await axios.get('http://localhost:3000/api/places/' + locationId);
 
@@ -17,8 +19,13 @@ const SpecificParkingLocation = ({locationData, locationId}) => {
                 locationDataTest = getLocationData.data.data;
             }
             setDynamicLocationData(locationDataTest);
-        }, 15000)
+        }, 1000)
+        return () => setDidMount(false);
     }, [dynamicLocationData]);
+
+    if(!didMount) {
+        return null;
+    }
 
     return ( 
         <div className="body_wrapper">

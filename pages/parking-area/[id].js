@@ -1,4 +1,5 @@
 import SpecificAreaData from '../../components/data/SpecificAreaData';
+import ExplainColorSymbol from '../../components/explainField/explainColorSymbol';
 import styles from '../../styles/SpecificArea.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faParking } from '@fortawesome/free-solid-svg-icons';
@@ -10,8 +11,10 @@ const ParkingArea = ({areaData, areaId}) => {
     let emptyNumber = 0;
 
     const [dynamicAreaData, setDynamicAreaData] = useState(areaData);
+    const [didMount, setDidMount] = useState(false);
 
     useEffect(() => {
+        setDidMount(true);
         setTimeout(async () => {
             let getAreaData = await axios.get('http://localhost:3000/api/areas/' + areaId);
 
@@ -20,7 +23,8 @@ const ParkingArea = ({areaData, areaId}) => {
                 areaDataTest = getAreaData.data.data.doc;
             }
             setDynamicAreaData(areaDataTest);
-        }, 15000)
+        }, 1000)
+        return () => setDidMount(false);
     }, [dynamicAreaData])
 
     dynamicAreaData.data.forEach((data) => {
@@ -29,6 +33,10 @@ const ParkingArea = ({areaData, areaId}) => {
             emptyNumber++;
         }
     });
+
+    if(!didMount) {
+        return null;
+    }
     
     return ( 
         <div className="body_wrapper">
@@ -41,6 +49,9 @@ const ParkingArea = ({areaData, areaId}) => {
                 <SpecificAreaData areaData={dynamicAreaData.data} />
             </div>
             <p>Empty slot(s): {emptySlots.toString()}</p>
+            <div className={styles.explain}>
+                <ExplainColorSymbol />
+            </div>
         </div>
     );
 }

@@ -27,18 +27,51 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.full, .empty {
-    border: 1px solid black;
+.full, .empty, .warning {
     padding: 40px 0;
     text-align: center;
 }
 
-.full {
+.full, .explain_full {
     background-color: #2E86C1;
+    border: 1px solid black;
 }
 
-.empty {
+.empty, .explain_empty {
     background-color: #ffffff;
+    border: 1px solid black;
+}
+
+.warning, .explain_warning {
+    background-color: #ffe800;
+    border: 1px solid black;
+}
+
+.explain {
+    width: 80%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sub_explain {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sub_explain {
+    margin-bottom: 10px;
+}
+
+.sub_explain p {
+    margin-left: 5px;
+}
+
+.div_explain {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 415px){  
@@ -73,5 +106,16 @@
         border: 1px solid black;
         padding: 40px 0;
         text-align: center;
+    }
+
+    .explain {
+        width: 90%;
+        margin: 15px auto 20px auto; 
+    }
+
+    .div_explain {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
     }
 }
